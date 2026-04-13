@@ -59,13 +59,13 @@ public class ContactServiceTests
 
 | Method | Test Cases |
 |--------|-----------|
-| `CreateAsync` | Happy path, name empty, birthdate in future, age <= 0, age < 18, duplicate name (allowed) |
-| `GetAllAsync` | Happy path, filter by name, filter by gender, filter by birthdate range |
-| `GetByIdAsync` | Happy path, contact not found |
-| `UpdateAsync` | Happy path, not found, birthdate in future, age < 18 |
-| `ActivateAsync` | Happy path, not found, already active (409) |
-| `DeactivateAsync` | Happy path, not found, already inactive (409) |
-| `DeleteAsync` | Happy path, not found |
+| `CreateAsync` | Happy path, name empty/whitespace, name null, birthdate in future, age exactly 0, age < 18, valid age boundary (18+), all valid genders, valid gender enum value, gender not provided (required), multiple validation errors |
+| `GetAllAsync` | Happy path (returns active only), filter by name (case-insensitive partial), filter by gender (exact match), filter by birthdateFrom, filter by birthdateTo, filter by birthdate range (from + to), empty result (no matches), all filters combined |
+| `GetByIdAsync` | Happy path (active contact), contact not found (never existed), contact exists but inactive (404) |
+| `UpdateAsync` | Happy path, contact not found, name empty/whitespace, birthdate in future, age exactly 0, age < 18, partial update (only name), partial update (only birthdate), partial update (only gender), no fields provided (no-op), multiple validation errors |
+| `ActivateAsync` | Happy path (inactive → active), contact not found (never existed), already active (409), can reactivate after deactivate |
+| `DeactivateAsync` | Happy path (active → inactive), contact not found (never existed), already inactive (409), can deactivate after activate |
+| `DeleteAsync` | Happy path (active deleted), happy path (inactive deleted), contact not found (never existed) |
 
 ### Naming Convention
 `MethodName_ShouldExpectedBehavior_WhenCondition`
@@ -110,13 +110,13 @@ public class ContactsControllerTests : IClassFixture<WebApplicationFactory<Progr
 
 | Endpoint | Tests |
 |----------|-------|
-| POST /api/contacts | Returns 201 + Location header, Returns 400 for invalid data |
-| GET /api/contacts | Returns 200 + list, Filters work |
+| POST /api/contacts | Returns 201 + Location header |
+| GET /api/contacts | Returns 200 + list |
 | GET /api/contacts/{id} | Returns 200 for active, Returns 404 for inactive |
 | PATCH /api/contacts/{id} | Returns 200, Returns 404 for inactive |
 | PATCH /api/contacts/{id}/activate | Returns 200, Returns 409 if already active |
 | PATCH /api/contacts/{id}/deactivate | Returns 200, Returns 409 if already inactive |
-| DELETE /api/contacts/{id} | Returns 204, Returns 404 |
+| DELETE /api/contacts/{id} | Returns 204 |
 
 ### Database Cleanup
 ```csharp
