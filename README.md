@@ -18,8 +18,12 @@ API para gerenciamento de contatos com ASP.NET Core.
    ```bash
    cp .env.example .env
    ```
+3. Execute o container do banco de dados:
+   ```bash
+   docker compose up -d
+   ```
 
-3. Aplique as migrações do banco de dados:
+4. Aplique as migrações do banco de dados:
    ```bash
    dotnet ef database update --project Contacts.API
    ```
