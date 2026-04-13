@@ -19,7 +19,6 @@ public class ContactRepository : IContactRepository
     public async Task<Contact?> GetByIdAsync(Guid id)
     {
         return await _db.Contacts
-            .AsNoTracking()
             .FirstOrDefaultAsync(c => c.Id == id);
     }
 
@@ -27,7 +26,6 @@ public class ContactRepository : IContactRepository
     public async Task<Contact?> GetActiveByIdAsync(Guid id)
     {
         return await _db.Contacts
-            .AsNoTracking()
             .FirstOrDefaultAsync(c => c.Id == id && c.IsActive);
     }
 
