@@ -1,0 +1,50 @@
+# .NET build artifacts
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.ncrunchproject
+
+# NuGet
+*.nupkg
+*.nuget.targets
+project.lock.json
+project.assets.json
+packages/
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+appsettings.Development.json
+*.pfx
+*.p12
+*.key
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Test results
+TestResults/
+*.trx
+coverage*.xml
+*.coveragexml
+*.opencover.xml
+
+# Logs
+*.log
+logs/
