@@ -6,6 +6,8 @@ using Contacts.API.Services;
 using Contacts.API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
+DotNetEnv.Env.Load("../.env");
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Load connection string from environment variable, fallback to appsettings
