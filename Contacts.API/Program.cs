@@ -1,4 +1,5 @@
 using Contacts.API.Data;
+using Contacts.API.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// TODO: register IContactRepository and IContactService (Milestone 3)
+
 var app = builder.Build();
+
+// ErrorHandlingMiddleware must be first — catches exceptions from the entire pipeline
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
