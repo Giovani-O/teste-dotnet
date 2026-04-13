@@ -1,5 +1,7 @@
 using Contacts.API.Data;
 using Contacts.API.Middleware;
+using Contacts.API.Repositories;
+using Contacts.API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +18,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// TODO: register IContactRepository and IContactService (Milestone 3)
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
+// TODO: Register IContactService (Milestone 3)
 
 var app = builder.Build();
 
