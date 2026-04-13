@@ -41,9 +41,9 @@ public class ContactService : Services.Interfaces.IContactService
 
     public async Task<ContactResponseDto> GetByIdAsync(Guid id)
     {
-        var contact = await _repository.GetActiveByIdAsync(id);
+        var contact = await _repository.GetByIdAsync(id);
         
-        if (contact is null)
+        if (contact is null || !contact.IsActive)
             throw new NotFoundException($"Contact with ID {id} not found.");
 
         return ContactMapper.ToResponseDto(contact);
@@ -104,6 +104,7 @@ public class ContactService : Services.Interfaces.IContactService
         contact.IsActive = false;
         contact.UpdatedAt = DateTime.UtcNow;
 
+        await _repository.UpdateAsync(contact);
         await _repository.SaveChangesAsync();
     }
 
